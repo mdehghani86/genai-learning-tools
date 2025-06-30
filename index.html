@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Generative AI Tools - IE 5373</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #001a70 0%, #0055d4 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .header .subtitle {
+            background: white;
+            color: #0055d4;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .nav-bar {
+            background: #f8f9ff;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: #0055d4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 150px;
+        }
+        
+        .nav-btn:hover {
+            background: #003d99;
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.active {
+            background: #1e8a5e;
+        }
+        
+        .tools-overview {
+            padding: 40px 30px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        
+        .tools-overview h2 {
+            color: #0055d4;
+            margin-top: 0;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border: 2px solid #e6f0ff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 85, 212, 0.15);
+            border-color: #0055d4;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0055d4 0%, #ffd700 50%, #dc3545 100%);
+        }
+        
+        .transformer-card::before {
+            background: linear-gradient(90deg, #6f42c1 0%, #9b59b6 100%);
+        }
+        
+        .tool-card h3 {
+            color: #0055d4;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .transformer-card h3 {
+            color: #6f42c1;
+        }
+        
+        .tool-card p {
+            margin: 0 0 20px 0;
+            line-height: 1.6;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        .tool-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .tool-features li {
+            padding: 4px 0;
+            color: #555;
+            position: relative;
+            padding-left: 20px;
+            font-size: 13px;
+        }
+        
+        .tool-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #1e8a5e;
+            font-weight: bold;
+        }
+        
+        .launch-btn {
+            background: #0055d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .launch-btn:hover {
+            background: #003d99;
+            transform: translateY(-2px);
+        }
+        
+        .transformer-btn {
+            background: #6f42c1;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        
+        .transformer-btn:hover {
+            background: #5a2d91;
+            color: white;
+        }
+        
+        .tool-section {
+            display: none;
+            padding: 40px 30px;
+            max-width: 850px;
+            margin: 0 auto;
+            background: #f8f9ff;
+        }
+        
+        .tool-section.active {
+            display: block;
+        }
+        
+        .section-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            color: #0055d4;
+            margin-top: 0;
+            font-size: 24px;
+            border-bottom: 2px solid #0055d4;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .intro-box {
+            background: linear-gradient(to right, rgba(0, 85, 212, 0.05), rgba(0, 85, 212, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid rgba(0, 85, 212, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .educational-box {
+            background: linear-gradient(to right, #f0fff5, #e6f7ef);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #1e8a5e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        
+        .educational-box h3 {
+            color: #1e8a5e;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .reflection-box {
+            background: #f0fff5;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #c8e6c9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        
+        .reflection-box h3 {
+            color: #1e8a5e;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .method-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e6f0ff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 85, 212, 0.12);
+            border-color: #0055d4;
+        }
+        
+        .chunk {
+            margin: 6px 0;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, #f0f5ff 0%, #e6f0ff 100%);
+            border-radius: 8px;
+            border-left: 4px solid #0055d4;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .chunk:hover {
+            box-shadow: 0 2px 8px rgba(0,85,212,0.15);
+            transform: translateY(-1px);
+        }
+        
+        .chunk.overlap {
+            background: linear-gradient(135deg, #fff4e6 0%, #ffe6cc 100%);
+            border-left-color: #ff8c00;
+        }
+        
+        .chunk-number {
+            position: absolute;
+            top: -8px;
+            right: 10px;
+            background: #0055d4;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .chunk.overlap .chunk-number {
+            background: #ff8c00;
+        }
+        
+        .token {
+            display: inline-block;
+            margin: 2px;
+            padding: 4px 8px;
+            background: linear-gradient(135deg, #e8f4fd 0%, #cce5ff 100%);
+            border: 1px solid #0055d4;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            color: #003d99;
+            transition: all 0.2s;
+        }
+        
+        .token:hover {
+            background: linear-gradient(135deg, #0055d4 0%, #003d99 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .token-stats {
+            background: #f0f5ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #0055d4;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .token-stat {
+            text-align: center;
+        }
+        
+        .token-stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0055d4;
+        }
+        
+        .token-stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0055d4;
+            border: 2px solid white;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #003d99;
+            transform: scale(1.1);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0055d4;
+            border: 2px solid white;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9ff;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+            
+            .tools-overview, .tool-section {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Applied Generative AI Tools</h1>
+            <div class="subtitle">
+                Interactive Learning & Text Processing Strategies
+            </div>
+        </div>
+        
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-buttons">
+                <button class="nav-btn active" data-section="home">🏠 Home</button>
+                <button class="nav-btn" data-section="temperature">🌡️ Temperature</button>
+                <button class="nav-btn" data-section="chunking">📝 Text Chunking</button>
+                <button class="nav-btn" data-section="tokenizer">🔤 Tokenizer</button>
+            </div>
+        </div>
+        
+        <!-- Home Section -->
+        <div id="home" class="tool-section active">
+            <div class="tools-overview">
+                <h2>Interactive Learning Tools</h2>
+                
+                <div class="tools-grid">
+                    <!-- Temperature Tool Card -->
+                    <div class="tool-card" data-section="temperature">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; background: #0055d4; transform: rotate(45deg);"></div>
+                            <div style="position: absolute; top: 25px; right: 25px; width: 20px; height: 35px; background: #ffd700; transform: rotate(15deg);"></div>
+                            <div style="position: absolute; top: 35px; right: 5px; width: 15px; height: 25px; background: #dc3545; transform: rotate(-30deg);"></div>
+                        </div>
+                        
+                        <h3 style="position: relative; z-index: 2;">🌡️ <span style="color: #dc3545;">Temperature</span> Explorer</h3>
+                        <p style="position: relative; z-index: 2;">Discover how temperature affects language model creativity and predictability through interactive probability visualization.</p>
+                        <ul class="tool-features">
+                            <li>Interactive temperature slider (0.2 - 2.0)</li>
+                            <li>Real-time probability visualization</li>
+                            <li>Word prediction demonstration</li>
+                            <li>Educational insights and examples</li>
+                        </ul>
+                        <button class="launch-btn">Explore Temperature</button>
+                    </div>
+                    
+                    <!-- Text Chunking Tool Card -->
+                    <div class="tool-card" data-section="chunking">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 15px; right: 15px; width: 30px; height: 20px; background: #dc3545; transform: rotate(-45deg);"></div>
+                            <div style="position: absolute; top: 30px; right: 30px; width: 22px; height: 30px; background: #0055d4; transform: rotate(60deg);"></div>
+                            <div style="position: absolute; top: 5px; right: 40px; width: 18px; height: 28px; background: #ffd700; transform: rotate(25deg);"></div>
+                        </div>
+                        
+                        <h3 style="position: relative; z-index: 2;">📝 Text <span style="color: #ffd700;">Chunking</span></h3>
+                        <p style="position: relative; z-index: 2;">Learn text preprocessing techniques essential for RAG systems and document processing with different chunking methods.</p>
+                        <ul class="tool-features">
+                            <li>Basic vs. Recursive chunking methods</li>
+                            <li>Adjustable chunk size and overlap</li>
+                            <li>Visual chunk boundary display</li>
+                            <li>Interactive parameter controls</li>
+                        </ul>
+                        <button class="launch-btn">Start Chunking</button>
+                    </div>
+                    
+                    <!-- Tokenizer Tool Card -->
+                    <div class="tool-card" data-section="tokenizer">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; background: #0055d4; transform: rotate(45deg);"></div>
+                            <div style="position: absolute; top: 25px; right: 25px; width: 20px; height: 35px; background: #ffd700; transform: rotate(15deg);"></div>
+                            <div style="position: absolute; top: 35px; right: 5px; width: 15px; height: 25px; background: #dc3545; transform: rotate(-30deg);"></div>
+                            <div style="position: absolute; top: 5px; right: 35px; width: 18px; height: 18px; background: #28a745; opacity: 0.7;"></div>
+                        </div>
+                        
+                        <h3 style="position: relative; z-index: 2;">🔤 <span style="color: #28a745;">Tokenizer</span> Explorer</h3>
+                        <p style="position: relative; z-index: 2;">Understand how text is broken down into tokens, the fundamental units that language models process.</p>
+                        <ul class="tool-features">
+                            <li>Basic word-level tokenization</li>
+                            <li>Visual token boundary display</li>
+                            <li>Token count and statistics</li>
+                            <li>Character vs. word comparisons</li>
+                        </ul>
+                        <button class="launch-btn">Tokenize Text</button>
+                    </div>
+                    
+                    <!-- Transformer Explainer Card -->
+                    <div class="tool-card transformer-card">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 8px; right: 8px; width: 32px; height: 18px; background: #6f42c1; transform: rotate(60deg);"></div>
+                            <div style="position: absolute; top: 25px; right: 25px; width: 20px; height: 30px; background: #9b59b6; transform: rotate(-30deg);"></div>
+                            <div style="position: absolute; top: 35px; right: 5px; width: 24px; height: 15px; background: #6f42c1; opacity: 0.7; transform: rotate(45deg);"></div>
+                        </div>
+                        
+                        <h3 style="position: relative; z-index: 2;">🔬 Transformer Architecture</h3>
+                        <p style="position: relative; z-index: 2;">Dive deep into how transformers work with this interactive visualization tool from Georgia Tech's Polo Club.</p>
+                        <ul class="tool-features">
+                            <li>Interactive transformer visualization</li>
+                            <li>Step-by-step attention mechanisms</li>
+                            <li>Layer-by-layer processing view</li>
+                            <li>Real-time model predictions</li>
+                        </ul>
+                        <a href="https://poloclub.github.io/transformer-explainer/" target="_blank" class="launch-btn transformer-btn">Explore Transformers</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Temperature Tool Section -->
+        <div id="temperature" class="tool-section">
+            <div class="section-card">
+                <h2 class="section-title">🌡️ <span style="color: #dc3545;">Temperature</span> Explorer</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                    <div class="method-card">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; background: #dc3545; transform: rotate(45deg);"></div>
+                            <div style="position: absolute; top: 25px; right: 25px; width: 20px; height: 35px; background: #ffd700; transform: rotate(15deg);"></div>
+                            <div style="position: absolute; top: 35px; right: 5px; width: 15px; height: 25px; background: #0055d4; transform: rotate(-30deg);"></div>
+                            <div style="position: absolute; top: 5px; right: 35px; width: 18px; height: 18px; background: #dc3545; opacity: 0.7;"></div>
+                        </div>
+                        
+                        <h3 style="color: #0055d4; margin: 0 0 12px 0; font-size: 18px; font-weight: 600; position: relative; z-index: 2;">Low Temperature</h3>
+                        <p style="margin: 0; line-height: 1.6; color: #4a5568; font-size: 14px; position: relative; z-index: 2;">More focused and predictable outputs. Best for factual tasks and consistent responses.</p>
+                        
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #dc3545 0%, #ffd700 50%, #0055d4 100%);"></div>
+                    </div>
+                    
+                    <div class="method-card">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 15px; right: 15px; width: 30px; height: 20px; background: #ffd700; transform: rotate(-45deg);"></div>
+                            <div style="position: absolute; top: 30px; right: 30px; width: 22px; height: 30px; background: #dc3545; transform: rotate(60deg);"></div>
+                            <div style="position: absolute; top: 5px; right: 40px; width: 18px; height: 28px; background: #0055d4; transform: rotate(25deg);"></div>
+                            <div style="position: absolute; top: 35px; right: 8px; width: 16px; height: 16px; background: #ffd700; opacity: 0.8; transform: rotate(75deg);"></div>
+                        </div>
+                        
+                        <h3 style="color: #0055d4; margin: 0 0 12px 0; font-size: 18px; font-weight: 600; position: relative; z-index: 2;">High Temperature</h3>
+                        <p style="margin: 0; line-height: 1.6; color: #4a5568; font-size: 14px; position: relative; z-index: 2;">More creative and diverse outputs. Best for brainstorming and creative writing tasks.</p>
+                        
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #ffd700 0%, #dc3545 50%, #0055d4 100%);"></div>
+                    </div>
+                </div>
+                
+                <div class="intro-box">
+                    <p style="font-size: 20px; color: #0055d4; font-weight: bold; margin: 0 0 5px 0; text-align: center;">"The kid is chasing the..."</p>
+                    <p style="color: #333; font-style: italic; margin: 0; text-align: center;">How will the model complete this sentence?</p>
+                </div>
+                
+                <p style="margin-bottom: 25px;">Move the slider to see how temperature affects word prediction probabilities. At low temperatures, the model is very likely to choose "cat". As temperature increases, other options become more viable.</p>
+                
+                <!-- Temperature slider -->
+                <div style="max-width: 800px; margin: 20px auto; text-align: center;">
+                    <label for="temp-slider" style="font-weight: bold; color: #0055d4; font-size: 16px;">Temperature: <span id="temp-value">0.2</span></label><br>
+                    
+                    <div style="position: relative; width: 80%; height: 30px; margin: 15px auto; background: #f0f5ff; border: 2px solid #0055d4; border-radius: 15px; padding: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
+                        <div id="slider-fill" style="position: absolute; left: 0; top: 0; height: 100%; width: 10%; background: linear-gradient(to right, #cce5ff, #0055d4); border-radius: 13px; z-index: 1;"></div>
+                        
+                        <div style="position: absolute; top: -20px; left: 0%; font-size: 12px; color: #0055d4;">0.2</div>
+                        <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #0055d4;">1.1</div>
+                        <div style="position: absolute; top: -20px; right: 0%; font-size: 12px; color: #0055d4;">2.0</div>
+                        
+                        <input type="range" id="temp-slider" min="0.2" max="2.0" step="0.1" value="0.2" 
+                            style="position: relative; width: 100%; height: 100%; margin: 0; -webkit-appearance: none; appearance: none; background: transparent; z-index: 2; cursor: pointer;">
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; width: 80%; margin: 10px auto; font-size: 12px; color: #666;">
+                        <div>More Predictable</div>
+                        <div>More Random</div>
+                    </div>
+                </div>
+                
+                <!-- Visual chart -->
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 20px 0;">
+                    <div style="height: 250px; position: relative; margin: 30px 0 60px;">
+                        <div style="position: absolute; bottom: -40px; left: 10%; transform: translateX(-50%); text-align: center; width: 80px; font-weight: bold; color: #333;">cat</div>
+                        <div style="position: absolute; bottom: -40px; left: 30%; transform: translateX(-50%); text-align: center; width: 80px; font-weight: bold; color: #333;">ball</div>
+                        <div style="position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); text-align: center; width: 80px; font-weight: bold; color: #333;">squirrel</div>
+                        <div style="position: absolute; bottom: -40px; left: 70%; transform: translateX(-50%); text-align: center; width: 80px; font-weight: bold; color: #333;">rabbit</div>
+                        <div style="position: absolute; bottom: -40px; left: 90%; transform: translateX(-50%); text-align: center; width: 80px; font-weight: bold; color: #333;">toy</div>
+                        
+                        <div id="bar-cat" style="position: absolute; bottom: 0; left: 10%; transform: translateX(-50%); width: 60px; height: 200px; background: linear-gradient(to top, #0055d4, #80aaff); border-radius: 5px 5px 0 0; transition: height 0.5s ease;"></div>
+                        <div id="bar-ball" style="position: absolute; bottom: 0; left: 30%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(to top, #0055d4, #80aaff); border-radius: 5px 5px 0 0; transition: height 0.5s ease;"></div>
+                        <div id="bar-squirrel" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 2px; background: linear-gradient(to top, #0055d4, #80aaff); border-radius: 5px 5px 0 0; transition: height 0.5s ease;"></div>
+                        <div id="bar-rabbit" style="position: absolute; bottom: 0; left: 70%; transform: translateX(-50%); width: 60px; height: 1px; background: linear-gradient(to top, #0055d4, #80aaff); border-radius: 5px 5px 0 0; transition: height 0.5s ease;"></div>
+                        <div id="bar-toy" style="position: absolute; bottom: 0; left: 90%; transform: translateX(-50%); width: 60px; height: 1px; background: linear-gradient(to top, #0055d4, #80aaff); border-radius: 5px 5px 0 0; transition: height 0.5s ease;"></div>
+                        
+                        <div id="label-cat" style="position: absolute; bottom: 205px; left: 10%; transform: translateX(-50%); text-align: center; color: #0055d4; font-weight: bold; font-size: 14px; width: 60px; transition: bottom 0.5s ease;">98%</div>
+                        <div id="label-ball" style="position: absolute; bottom: 9px; left: 30%; transform: translateX(-50%); text-align: center; color: #0055d4; font-weight: bold; font-size: 14px; width: 60px; transition: bottom 0.5s ease;">1%</div>
+                        <div id="label-squirrel" style="position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); text-align: center; color: #0055d4; font-weight: bold; font-size: 14px; width: 60px; transition: bottom 0.5s ease;">0.5%</div>
+                        <div id="label-rabbit" style="position: absolute; bottom: 6px; left: 70%; transform: translateX(-50%); text-align: center; color: #0055d4; font-weight: bold; font-size: 14px; width: 60px; transition: bottom 0.5s ease;">0.3%</div>
+                        <div id="label-toy" style="position: absolute; bottom: 6px; left: 90%; transform: translateX(-50%); text-align: center; color: #0055d4; font-weight: bold; font-size: 14px; width: 60px; transition: bottom 0.5s ease;">0.2%</div>
+                    </div>
+                </div>
+                
+                <div class="educational-box">
+                    <h3>Try it yourself!</h3>
+                    <p style="margin-bottom: 0;">Experiment with the temperature slider and observe how it affects word probabilities. Think about how you could use different temperature settings in your own prompts.</p>
+                </div>
+                
+                <div class="reflection-box">
+                    <h3>Reflection Questions</h3>
+                    <p style="margin-bottom: 5px;">Based on your experiments, how might you use different temperature settings for:</p>
+                    <ul>
+                        <li>Writing a factual report about historical events?</li>
+                        <li>Generating creative marketing slogans?</li>
+                        <li>Explaining technical concepts to beginners?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Text Chunking Tool Section -->
+        <div id="chunking" class="tool-section">
+            <div class="section-card">
+                <h2 class="section-title">📝 Text Chunking Strategies</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                    <div class="method-card">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; background: #0055d4; transform: rotate(45deg);"></div>
+                            <div style="position: absolute; top: 25px; right: 25px; width: 20px; height: 35px; background: #ffd700; transform: rotate(15deg);"></div>
+                            <div style="position: absolute; top: 35px; right: 5px; width: 15px; height: 25px; background: #dc3545; transform: rotate(-30deg);"></div>
+                        </div>
+                        
+                        <h3 style="color: #0055d4; margin: 0 0 12px 0; font-size: 18px; font-weight: 600; position: relative; z-index: 2;">Basic Text Chunking</h3>
+                        <p style="margin: 0; line-height: 1.6; color: #4a5568; font-size: 14px; position: relative; z-index: 2;">Splits text into fixed-size chunks with optional overlap to preserve context.</p>
+                        
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #0055d4 0%, #ffd700 50%, #dc3545 100%);"></div>
+                    </div>
+                    
+                    <div class="method-card">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; overflow: hidden;">
+                            <div style="position: absolute; top: 15px; right: 15px; width: 30px; height: 20px; background: #dc3545; transform: rotate(-45deg);"></div>
+                            <div style="position: absolute; top: 30px; right: 30px; width: 22px; height: 30px; background: #0055d4; transform: rotate(60deg);"></div>
+                            <div style="position: absolute; top: 5px; right: 40px; width: 18px; height: 28px; background: #ffd700; transform: rotate(25deg);"></div>
+                        </div>
+                        
+                        <h3 style="color: #0055d4; margin: 0 0 12px 0; font-size: 18px; font-weight: 600; position: relative; z-index: 2;">Recursive Text Splitting</h3>
+                        <p style="margin: 0; line-height: 1.6; color: #4a5568; font-size: 14px; position: relative; z-index: 2;">Recursively divides text into smaller pieces without overlap.</p>
+                        
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #dc3545 0%, #0055d4 50%, #ffd700 100%);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">Text Input</h2>
+                
+                <div class="intro-box">
+                    <p style="color: #666; margin-bottom: 10px; font-weight: bold;">Enter your text to see how different chunking approaches split it:</p>
+                    <textarea id="chunking-text-input" style="width: 100%; height: 120px; padding: 10px; border: 1px solid #0055d4; border-radius: 8px; resize: vertical; font-size: 14px; font-family: inherit; background: white;" placeholder="Enter your text here...">This is a sample text to demonstrate how text splitting works. You can replace this text with your own input. The tool will split the text into chunks based on the selected approach and parameters. Try different approaches and see how they affect the chunking process.</textarea>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">Chunking Controls</h2>
+                
+                <div style="margin: 25px 0;">
+                    <label style="font-weight: bold; color: #0055d4; font-size: 16px; display: block; margin-bottom: 10px;">Chunking Approach</label>
+                    
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" id="chunking-basic-approach" name="chunking-approach" value="basic" checked style="transform: scale(1.2);">
+                            <label for="chunking-basic-approach" style="color: #333; font-weight: 500;">Basic Text Chunking</label>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" id="chunking-recursive-approach" name="chunking-approach" value="recursive" style="transform: scale(1.2);">
+                            <label for="chunking-recursive-approach" style="color: #333; font-weight: 500;">Recursive Text Splitting</label>
+                        </div>
+                    </div>
+                    
+                    <div id="chunking-approach-description" style="background: #f0f5ff; border-radius: 8px; padding: 12px; border-left: 4px solid #0055d4; font-size: 14px; color: #666;">
+                        Splits text into fixed-size chunks with optional overlap for better context preservation.
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px;">
+                    <div>
+                        <label style="font-weight: bold; color: #0055d4; font-size: 14px; display: block; margin-bottom: 8px;">Chunk Size: <span id="chunking-chunk-size-value">50</span></label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button id="chunking-decrease-chunk" style="background: #0055d4; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; min-width: 35px;">−</button>
+                            <input type="range" id="chunking-chunk-size-slider" min="20" max="100" step="5" value="50" style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; outline: none; -webkit-appearance: none;">
+                            <button id="chunking-increase-chunk" style="background: #0055d4; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; min-width: 35px;">+</button>
+                        </div>
+                    </div>
+
+                    <div id="chunking-overlap-section">
+                        <label style="font-weight: bold; color: #0055d4; font-size: 14px; display: block; margin-bottom: 8px;">Chunk Overlap: <span id="chunking-overlap-size-value">10</span></label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button id="chunking-decrease-overlap" style="background: #0055d4; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; min-width: 35px;">−</button>
+                            <input type="range" id="chunking-overlap-size-slider" min="0" max="20" step="2" value="10" style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; outline: none; -webkit-appearance: none;">
+                            <button id="chunking-increase-overlap" style="background: #0055d4; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; min-width: 35px;">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">Output Chunks</h2>
+                
+                <div id="chunking-chunks-info" style="background: #f0f5ff; border-radius: 8px; padding: 12px; margin: 15px 0; color: #666; font-size: 14px;">
+                    <span id="chunking-chunk-count">0</span> chunks generated
+                </div>
+                
+                <div id="chunking-chunks-container" style="max-height: 400px; overflow-y: auto;"></div>
+            </div>
+
+            <div class="educational-box">
+                <h3>Experiment and Learn</h3>
+                <p style="margin-bottom: 0;">Try different chunking approaches and parameter settings to see how they affect text processing. Consider the trade-offs between chunk size, overlap, and information coherence.</p>
+            </div>
+        </div>
+        
+        <!-- Tokenizer Tool Section -->
+        <div id="tokenizer" class="tool-section">
+            <div class="section-card">
+                <h2 class="section-title">🔤 Tokenizer Explorer</h2>
+                
+                <div class="intro-box">
+                    <p style="color: #666; margin-bottom: 10px; font-weight: bold; text-align: center;">Enter text to see how it gets tokenized</p>
+                    <p style="color: #333; font-style: italic; margin: 0; text-align: center;">Understanding how models break down text into processable units</p>
+                </div>
+                
+                <div style="margin: 25px 0;">
+                    <label style="font-weight: bold; color: #0055d4; font-size: 16px; display: block; margin-bottom: 10px;">Tokenization Method</label>
+                    
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" id="word-tokenizer" name="tokenizer-method" value="word" checked style="transform: scale(1.2);">
+                            <label for="word-tokenizer" style="color: #333; font-weight: 500;">Word-level</label>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" id="character-tokenizer" name="tokenizer-method" value="character" style="transform: scale(1.2);">
+                            <label for="character-tokenizer" style="color: #333; font-weight: 500;">Character-level</label>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" id="subword-tokenizer" name="tokenizer-method" value="subword" style="transform: scale(1.2);">
+                            <label for="subword-tokenizer" style="color: #333; font-weight: 500;">Subword (Simple)</label>
+                        </div>
+                    </div>
+                    
+                    <div id="tokenizer-description" style="background: #f0f5ff; border-radius: 8px; padding: 12px; border-left: 4px solid #0055d4; font-size: 14px; color: #666;">
+                        Splits text into individual words separated by spaces and punctuation.
+                    </div>
+                </div>
+                
+                <textarea id="tokenizer-text-input" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #0055d4; border-radius: 8px; resize: vertical; font-size: 14px; font-family: inherit; background: white; margin-bottom: 20px;" placeholder="Enter your text here...">Hello world! This is a sample text for tokenization. Let's see how it gets split into tokens.</textarea>
+                
+                <div class="token-stats">
+                    <div class="token-stat">
+                        <div class="token-stat-value" id="token-count">0</div>
+                        <div class="token-stat-label">Total Tokens</div>
+                    </div>
+                    <div class="token-stat">
+                        <div class="token-stat-value" id="character-count">0</div>
+                        <div class="token-stat-label">Characters</div>
+                    </div>
+                    <div class="token-stat">
+                        <div class="token-stat-value" id="compression-ratio">0.0</div>
+                        <div class="token-stat-label">Tokens/Chars</div>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid #e0e0e0; margin: 20px 0; min-height: 100px;">
+                    <h3 style="color: #0055d4; margin-top: 0; margin-bottom: 15px;">Tokenized Output:</h3>
+                    <div id="tokenizer-output" style="line-height: 1.8; word-wrap: break-word;">
+                        <!-- Tokens will be displayed here -->
+                    </div>
+                </div>
+                
+                <div class="educational-box">
+                    <h3>Understanding Tokenization</h3>
+                    <p style="margin-bottom: 0;">Tokenization is the first step in text processing for language models. Different methods produce different results - word-level preserves meaning, character-level handles any text, and subword methods balance vocabulary size with meaning preservation.</p>
+                </div>
+                
+                <div class="reflection-box">
+                    <h3>Key Observations</h3>
+                    <ul>
+                        <li>How does each method handle punctuation and spaces?</li>
+                        <li>Which method produces the most/fewest tokens?</li>
+                        <li>How might tokenization affect model performance?</li>
+                        <li>What happens with out-of-vocabulary words?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Applied Generative AI - IE 5373 - Dr. Dehghani</p>
+            <p>Interactive Learning Tools for Understanding AI Fundamentals</p>
+        </div>
+    </div>
+
+    <script>
+        // Navigation System - Clean and Simple
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Navigation functionality
+            function showSection(sectionId) {
+                // Hide all sections
+                const sections = document.querySelectorAll('.tool-section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Update navigation buttons
+                const navButtons = document.querySelectorAll('.nav-btn');
+                navButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                const activeBtn = document.querySelector(`[data-section="${sectionId}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Add event listeners to navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+            
+            // Add event listeners to tool cards
+            const toolCards = document.querySelectorAll('.tool-card[data-section]');
+            toolCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+            
+            // Temperature Tool JavaScript
+            const tempData = [
+                { word: "cat", initialProb: 0.7 },
+                { word: "ball", initialProb: 0.2 },
+                { word: "squirrel", initialProb: 0.05 },
+                { word: "rabbit", initialProb: 0.03 },
+                { word: "toy", initialProb: 0.02 }
+            ];
+            
+            const tempSlider = document.getElementById('temp-slider');
+            const tempValue = document.getElementById('temp-value');
+            const sliderFill = document.getElementById('slider-fill');
+            
+            if (tempSlider && tempValue && sliderFill) {
+                tempSlider.addEventListener('input', function() {
+                    const temperature = parseFloat(this.value);
+                    tempValue.textContent = temperature.toFixed(1);
+                    
+                    const percent = ((temperature - 0.2) / (2.0 - 0.2)) * 100;
+                    sliderFill.style.width = percent + '%';
+                    
+                    const adjustedData = applyTemperature(tempData, temperature);
+                    
+                    adjustedData.forEach(item => {
+                        const bar = document.getElementById(`bar-${item.word}`);
+                        const label = document.getElementById(`label-${item.word}`);
+                        
+                        if (bar && label) {
+                            const height = Math.max(item.probability * 200, 1);
+                            bar.style.height = `${height}px`;
+                            
+                            label.textContent = `${Math.round(item.probability * 100)}%`;
+                            label.style.bottom = `${height + 5}px`;
+                        }
+                    });
+                });
+                
+                function applyTemperature(data, temperature) {
+                    if (temperature === 0) {
+                        const maxProb = Math.max(...data.map(d => d.initialProb));
+                        return data.map(d => ({
+                            ...d,
+                            probability: d.initialProb === maxProb ? 1 : 0
+                        }));
+                    }
+                    
+                    const scaled = data.map(d => ({
+                        ...d,
+                        probability: Math.pow(d.initialProb, 1 / temperature)
+                    }));
+                    
+                    const total = scaled.reduce((sum, d) => sum + d.probability, 0);
+                    return scaled.map(d => ({
+                        ...d,
+                        probability: d.probability / total
+                    }));
+                }
+                
+                // Initialize temperature tool
+                const initialTemperature = parseFloat(tempSlider.value);
+                tempValue.textContent = initialTemperature.toFixed(1);
+                
+                const initialPercent = ((initialTemperature - 0.2) / (2.0 - 0.2)) * 100;
+                sliderFill.style.width = initialPercent + '%';
+                
+                const initialData = applyTemperature(tempData, initialTemperature);
+                
+                initialData.forEach(item => {
+                    const bar = document.getElementById(`bar-${item.word}`);
+                    const label = document.getElementById(`label-${item.word}`);
+                    
+                    if (bar && label) {
+                        const height = Math.max(item.probability * 200, 1);
+                        bar.style.height = `${height}px`;
+                        
+                        label.textContent = `${Math.round(item.probability * 100)}%`;
+                        label.style.bottom = `${height + 5}px`;
+                    }
+                });
+            }
+
+            // Chunking Tool JavaScript
+            const chunkingTextInput = document.getElementById("chunking-text-input");
+            const chunkingBasicRadio = document.getElementById("chunking-basic-approach");
+            const chunkingRecursiveRadio = document.getElementById("chunking-recursive-approach");
+            const chunkingApproachDescription = document.getElementById("chunking-approach-description");
+            const chunkingChunkSizeSlider = document.getElementById("chunking-chunk-size-slider");
+            const chunkingChunkSizeValue = document.getElementById("chunking-chunk-size-value");
+            const chunkingOverlapSection = document.getElementById("chunking-overlap-section");
+            const chunkingOverlapSizeSlider = document.getElementById("chunking-overlap-size-slider");
+            const chunkingOverlapSizeValue = document.getElementById("chunking-overlap-size-value");
+            const chunkingChunksContainer = document.getElementById("chunking-chunks-container");
+            const chunkingChunkCount = document.getElementById("chunking-chunk-count");
+            
+            const chunkingDecreaseChunkButton = document.getElementById("chunking-decrease-chunk");
+            const chunkingIncreaseChunkButton = document.getElementById("chunking-increase-chunk");
+            const chunkingDecreaseOverlapButton = document.getElementById("chunking-decrease-overlap");
+            const chunkingIncreaseOverlapButton = document.getElementById("chunking-increase-overlap");
+
+            let chunkingCurrentApproach = "basic";
+            let chunkingChunkSize = 50;
+            let chunkingOverlapSize = 10;
+
+            if (chunkingTextInput) {
+                chunkingBasicRadio.addEventListener("change", handleChunkingApproachChange);
+                chunkingRecursiveRadio.addEventListener("change", handleChunkingApproachChange);
+                
+                chunkingChunkSizeSlider.addEventListener("input", handleChunkingChunkSizeChange);
+                chunkingOverlapSizeSlider.addEventListener("input", handleChunkingOverlapSizeChange);
+                
+                chunkingDecreaseChunkButton.addEventListener("click", () => adjustChunkingChunkSize(-5));
+                chunkingIncreaseChunkButton.addEventListener("click", () => adjustChunkingChunkSize(5));
+                chunkingDecreaseOverlapButton.addEventListener("click", () => adjustChunkingOverlapSize(-2));
+                chunkingIncreaseOverlapButton.addEventListener("click", () => adjustChunkingOverlapSize(2));
+                
+                chunkingTextInput.addEventListener("input", updateChunkingChunks);
+
+                function handleChunkingApproachChange() {
+                    chunkingCurrentApproach = chunkingBasicRadio.checked ? "basic" : "recursive";
+                    
+                    if (chunkingCurrentApproach === "basic") {
+                        chunkingApproachDescription.textContent = "Splits text into fixed-size chunks with optional overlap for better context preservation.";
+                        chunkingOverlapSection.style.display = "block";
+                    } else {
+                        chunkingApproachDescription.textContent = "Recursively divides text into smaller pieces without overlap, useful for hierarchical processing.";
+                        chunkingOverlapSection.style.display = "none";
+                    }
+                    
+                    updateChunkingChunks();
+                }
+
+                function handleChunkingChunkSizeChange() {
+                    chunkingChunkSize = parseInt(chunkingChunkSizeSlider.value);
+                    chunkingChunkSizeValue.textContent = chunkingChunkSize;
+                    
+                    if (chunkingOverlapSize >= chunkingChunkSize) {
+                        chunkingOverlapSize = Math.max(0, chunkingChunkSize - 1);
+                        chunkingOverlapSizeSlider.value = chunkingOverlapSize;
+                        chunkingOverlapSizeValue.textContent = chunkingOverlapSize;
+                    }
+                    
+                    updateChunkingChunks();
+                }
+
+                function handleChunkingOverlapSizeChange() {
+                    chunkingOverlapSize = parseInt(chunkingOverlapSizeSlider.value);
+                    chunkingOverlapSizeValue.textContent = chunkingOverlapSize;
+                    updateChunkingChunks();
+                }
+
+                function adjustChunkingChunkSize(delta) {
+                    const newSize = Math.max(20, Math.min(100, chunkingChunkSize + delta));
+                    chunkingChunkSize = newSize;
+                    chunkingChunkSizeSlider.value = newSize;
+                    chunkingChunkSizeValue.textContent = newSize;
+                    
+                    if (chunkingOverlapSize >= chunkingChunkSize) {
+                        chunkingOverlapSize = Math.max(0, chunkingChunkSize - 1);
+                        chunkingOverlapSizeSlider.value = chunkingOverlapSize;
+                        chunkingOverlapSizeValue.textContent = chunkingOverlapSize;
+                    }
+                    
+                    updateChunkingChunks();
+                }
+
+                function adjustChunkingOverlapSize(delta) {
+                    const newSize = Math.max(0, Math.min(20, Math.min(chunkingChunkSize - 1, chunkingOverlapSize + delta)));
+                    chunkingOverlapSize = newSize;
+                    chunkingOverlapSizeSlider.value = newSize;
+                    chunkingOverlapSizeValue.textContent = newSize;
+                    updateChunkingChunks();
+                }
+
+                function updateChunkingChunks() {
+                    const text = chunkingTextInput.value.trim();
+                    if (!text) {
+                        chunkingChunksContainer.innerHTML = '<div style="text-align: center; color: #666; padding: 20px;">Enter some text to see the chunks</div>';
+                        chunkingChunkCount.textContent = '0';
+                        return;
+                    }
+
+                    let chunks = [];
+
+                    if (chunkingCurrentApproach === "basic") {
+                        chunks = basicTextChunking(text, chunkingChunkSize, chunkingOverlapSize);
+                    } else {
+                        chunks = recursiveTextSplitting(text, chunkingChunkSize);
+                    }
+
+                    displayChunkingChunks(chunks);
+                    chunkingChunkCount.textContent = chunks.length;
+                }
+
+                function basicTextChunking(text, size, overlap) {
+                    const chunks = [];
+                    const step = size - overlap;
+                    
+                    for (let i = 0; i < text.length; i += step) {
+                        const chunk = text.slice(i, i + size);
+                        if (chunk.trim()) {
+                            chunks.push(chunk);
+                        }
+                    }
+                    
+                    return chunks;
+                }
+
+                function recursiveTextSplitting(text, maxSize) {
+                    function split(str) {
+                        if (str.length <= maxSize) {
+                            return [str];
+                        }
+                        
+                        const sentences = str.split(/[.!?]+\s+/);
+                        if (sentences.length > 1) {
+                            const midPoint = Math.floor(sentences.length / 2);
+                            const firstHalf = sentences.slice(0, midPoint).join('. ') + '.';
+                            const secondHalf = sentences.slice(midPoint).join('. ');
+                            
+                            return [...split(firstHalf), ...split(secondHalf)];
+                        }
+                        
+                        const words = str.split(/\s+/);
+                        if (words.length > 1) {
+                            const midPoint = Math.floor(words.length / 2);
+                            const firstHalf = words.slice(0, midPoint).join(' ');
+                            const secondHalf = words.slice(midPoint).join(' ');
+                            
+                            return [...split(firstHalf), ...split(secondHalf)];
+                        }
+                        
+                        const midPoint = Math.floor(str.length / 2);
+                        return [str.slice(0, midPoint), str.slice(midPoint)];
+                    }
+                    
+                    return split(text).filter(chunk => chunk.trim());
+                }
+
+                function displayChunkingChunks(chunks) {
+                    chunkingChunksContainer.innerHTML = "";
+                    
+                    chunks.forEach((chunk, index) => {
+                        const chunkElement = document.createElement("div");
+                        chunkElement.classList.add("chunk");
+                        
+                        let hasOverlap = false;
+                        let overlapText = "";
+                        
+                        if (chunkingCurrentApproach === "basic" && index > 0 && chunkingOverlapSize > 0) {
+                            const prevChunk = chunks[index - 1];
+                            const currentChunkStart = chunk.slice(0, chunkingOverlapSize);
+                            const prevChunkEnd = prevChunk.slice(-chunkingOverlapSize);
+                            
+                            if (prevChunkEnd === currentChunkStart && currentChunkStart.length > 0) {
+                                hasOverlap = true;
+                                overlapText = currentChunkStart;
+                                chunkElement.classList.add("overlap");
+                            }
+                        }
+                        
+                        const chunkNumber = document.createElement("div");
+                        chunkNumber.classList.add("chunk-number");
+                        chunkNumber.textContent = index + 1;
+                        chunkElement.appendChild(chunkNumber);
+                        
+                        if (hasOverlap && overlapText.length > 0) {
+                            const overlapSpan = document.createElement("span");
+                            overlapSpan.style.backgroundColor = "#e8f4fd";
+                            overlapSpan.style.padding = "1px 8px";
+                            overlapSpan.style.borderRadius = "12px";
+                            overlapSpan.style.fontWeight = "600";
+                            overlapSpan.style.border = "1px solid #4a9eff";
+                            overlapSpan.style.color = "#1e40af";
+                            overlapSpan.style.margin = "0 2px";
+                            overlapSpan.style.display = "inline-block";
+                            overlapSpan.style.lineHeight = "1.2";
+                            overlapSpan.textContent = overlapText;
+                            
+                            const remainingText = document.createTextNode(chunk.slice(chunkingOverlapSize));
+                            
+                            chunkElement.appendChild(overlapSpan);
+                            chunkElement.appendChild(remainingText);
+                        } else {
+                            const chunkText = document.createTextNode(chunk);
+                            chunkElement.appendChild(chunkText);
+                        }
+                        
+                        chunkingChunksContainer.appendChild(chunkElement);
+                    });
+                }
+
+                // Initialize chunking tool
+                updateChunkingChunks();
+            }
+
+            // Tokenizer Tool JavaScript
+            const tokenizerTextInput = document.getElementById("tokenizer-text-input");
+            const wordTokenizer = document.getElementById("word-tokenizer");
+            const characterTokenizer = document.getElementById("character-tokenizer");
+            const subwordTokenizer = document.getElementById("subword-tokenizer");
+            const tokenizerDescription = document.getElementById("tokenizer-description");
+            const tokenizerOutput = document.getElementById("tokenizer-output");
+            const tokenCount = document.getElementById("token-count");
+            const characterCount = document.getElementById("character-count");
+            const compressionRatio = document.getElementById("compression-ratio");
+
+            let currentTokenizerMethod = "word";
+
+            if (tokenizerTextInput) {
+                wordTokenizer.addEventListener("change", handleTokenizerMethodChange);
+                characterTokenizer.addEventListener("change", handleTokenizerMethodChange);
+                subwordTokenizer.addEventListener("change", handleTokenizerMethodChange);
+                
+                tokenizerTextInput.addEventListener("input", updateTokenization);
+
+                function handleTokenizerMethodChange() {
+                    if (wordTokenizer.checked) {
+                        currentTokenizerMethod = "word";
+                        tokenizerDescription.textContent = "Splits text into individual words separated by spaces and punctuation.";
+                    } else if (characterTokenizer.checked) {
+                        currentTokenizerMethod = "character";
+                        tokenizerDescription.textContent = "Splits text into individual characters, including spaces and punctuation.";
+                    } else if (subwordTokenizer.checked) {
+                        currentTokenizerMethod = "subword";
+                        tokenizerDescription.textContent = "Splits text into subword units, handling common prefixes and suffixes.";
+                    }
+                    
+                    updateTokenization();
+                }
+
+                function tokenizeText(text, method) {
+                    if (!text.trim()) return [];
+                    
+                    switch (method) {
+                        case "word":
+                            return text.trim().split(/\s+/).filter(token => token.length > 0);
+                        
+                        case "character":
+                            return text.split('');
+                        
+                        case "subword":
+                            // Simple subword tokenization - split on spaces and common patterns
+                            let tokens = [];
+                            const words = text.trim().split(/\s+/);
+                            
+                            words.forEach(word => {
+                                if (word.length <= 3) {
+                                    tokens.push(word);
+                                } else {
+                                    // Simple subword strategy: split longer words
+                                    const prefixes = ['un', 're', 'pre', 'dis', 'in', 'im'];
+                                    const suffixes = ['ing', 'ed', 'er', 'est', 'ly', 'tion', 'ness'];
+                                    
+                                    let remaining = word;
+                                    let wordTokens = [];
+                                    
+                                    // Check for prefix
+                                    for (const prefix of prefixes) {
+                                        if (remaining.toLowerCase().startsWith(prefix) && remaining.length > prefix.length + 2) {
+                                            wordTokens.push(prefix);
+                                            remaining = remaining.slice(prefix.length);
+                                            break;
+                                        }
+                                    }
+                                    
+                                    // Check for suffix
+                                    for (const suffix of suffixes) {
+                                        if (remaining.toLowerCase().endsWith(suffix) && remaining.length > suffix.length + 2) {
+                                            wordTokens.push(remaining.slice(0, -suffix.length));
+                                            wordTokens.push(suffix);
+                                            remaining = '';
+                                            break;
+                                        }
+                                    }
+                                    
+                                    // Add remaining part if not processed
+                                    if (remaining) {
+                                        wordTokens.push(remaining);
+                                    }
+                                    
+                                    // If no subwords found, add the whole word
+                                    if (wordTokens.length === 0) {
+                                        wordTokens.push(word);
+                                    }
+                                    
+                                    tokens.push(...wordTokens);
+                                }
+                            });
+                            
+                            return tokens.filter(token => token.length > 0);
+                        
+                        default:
+                            return [];
+                    }
+                }
+
+                function updateTokenization() {
+                    const text = tokenizerTextInput.value;
+                    const tokens = tokenizeText(text, currentTokenizerMethod);
+                    
+                    // Update statistics
+                    tokenCount.textContent = tokens.length;
+                    characterCount.textContent = text.length;
+                    
+                    const ratio = text.length > 0 ? (tokens.length / text.length).toFixed(3) : '0.000';
+                    compressionRatio.textContent = ratio;
+                    
+                    // Display tokens
+                    tokenizerOutput.innerHTML = '';
+                    if (tokens.length === 0) {
+                        tokenizerOutput.innerHTML = '<div style="color: #666; font-style: italic;">Enter some text to see tokens</div>';
+                        return;
+                    }
+                    
+                    tokens.forEach(token => {
+                        const tokenElement = document.createElement('span');
+                        tokenElement.classList.add('token');
+                        tokenElement.textContent = token;
+                        tokenizerOutput.appendChild(tokenElement);
+                    });
+                }
+
+                // Initialize tokenizer tool
+                updateTokenization();
+            }
+        });
+    </script>
+</body>
+</html>
